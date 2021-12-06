@@ -6,7 +6,7 @@
 #    By: kgeorgia <kgeorgia@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/19 18:52:16 by kgeorgia          #+#    #+#              #
-#    Updated: 2021/11/21 19:26:27 by kgeorgia         ###   ########.fr        #
+#    Updated: 2021/12/06 16:55:24 by kgeorgia         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,8 @@ LIBFT	=		./libft/libft.a
 
 SRC =			main.cpp\
 				server/Server.cpp\
-				response/Response.cpp
+				response/Response.cpp\
+				request/Request.cpp
 
 
 SRCS =			$(addprefix $(DIR_SRCS), $(SRC))

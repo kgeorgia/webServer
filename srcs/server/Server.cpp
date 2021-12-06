@@ -67,9 +67,12 @@ void    Server::process(void)
         {
             char buffer[1000] = {0};
             ret = recv( tmp_socket, buffer, sizeof(buffer), 0);
+            std::string tmp_string(buffer);
+            Request tmp(tmp_string);
+            tmp.printAll();
             if (ret > 0)
             {
-                std::cout << "Client: " << buffer << std::endl;
+                // std::cout << "Client: " << buffer << std::endl;
                 send(tmp_socket, res.response(), strlen(res.response()), 0);
             }
             if (ret == 0 || ret == -1)

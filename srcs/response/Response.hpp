@@ -6,14 +6,14 @@
 /*   By: kgeorgia <kgeorgia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 19:08:41 by kgeorgia          #+#    #+#             */
-/*   Updated: 2021/11/21 19:22:26 by kgeorgia         ###   ########.fr       */
+/*   Updated: 2021/12/04 16:18:16 by kgeorgia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RESPONSE_HPP
 # define RESPONSE_HPP
 
-# include "../../includes/web_server.hpp"
+# include "../../includes/webServer.hpp"
 
 class Response
 {

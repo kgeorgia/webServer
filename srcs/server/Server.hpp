@@ -10,7 +10,7 @@ class Server
 	private:
 		int server_fd;
 		struct sockaddr_in address;
-		std::map<int, std::string> requests;
+		std::map<long, std::string> requests;
 
 	public:
 		Server();
@@ -18,6 +18,8 @@ class Server
 		~Server();
 
 		void	start(void);
+		void	accept(void);
+		int	readRequest(long socket);
 		void	process(void);
 		// void	close(void);
 };

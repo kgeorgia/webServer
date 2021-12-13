@@ -44,7 +44,28 @@ void    Request::parsing(const std::string &input) {
 			this->headers[key] = this->parseValue(line);	
 	}
 
-	// this->body = input.substr(idx);
+	this->body = input.substr(idx, std::string::npos);
+}
+
+void    Request::parseFirstLine(const std::string &line) {
+	size_t idx = 0;
+	size_t idxEnd = 0;
+	
+	idxEnd = line.find_first_of(' ', idx);
+	if (idxEnd == std::string::npos)
+		return;
+	this->method = line.substr(idx, idxEnd - idx);
+
+	idx = idxEnd + 1;
+	idxEnd = line.find_first_of(' ', idx);
+	if (idxEnd == std::string::npos)
+		return;
+	this->url = line.substr(idx, idxEnd - idx);
+
+	idx = idxEnd + 1;
+	if (idx == std::string::npos)
+		return;
+	this->protocol = line.substr(idx);
 }
 
 std::string Request::parseValue(const std::string &line) {
@@ -68,27 +89,6 @@ std::string Request::parseKey(const std::string &line) {
 		return "";
 	result = line.substr(0, idx);
 	return result;
-}
-
-void    Request::parseFirstLine(const std::string &line) {
-	size_t idx = 0;
-	size_t idxEnd = 0;
-	
-	idxEnd = line.find_first_of(' ', idx);
-	if (idxEnd == std::string::npos)
-		return;
-	this->method = line.substr(idx, idxEnd - idx);
-
-	idx = idxEnd + 1;
-	idxEnd = line.find_first_of(' ', idx);
-	if (idxEnd == std::string::npos)
-		return;
-	this->url = line.substr(idx, idxEnd - idx);
-
-	idx = idxEnd + 1;
-	if (idx == std::string::npos)
-		return;
-	this->protocol = line.substr(idx);
 }
 
 std::string    Request::nextLine(const std::string &input, size_t &idx) {

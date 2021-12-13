@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   web_server.hpp                                     :+:      :+:    :+:   */
+/*   webServer.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kgeorgia <kgeorgia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 17:19:31 by kgeorgia          #+#    #+#             */
-/*   Updated: 2021/11/21 19:20:52 by kgeorgia         ###   ########.fr       */
+/*   Updated: 2021/12/13 16:13:13 by kgeorgia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 # include <set>
 # include <algorithm>
 
+# include <fcntl.h>
+# include <errno.h>
 # include <stdlib.h>
 # include <netinet/in.h>
 # include <sys/types.h>

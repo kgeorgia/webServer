@@ -14,17 +14,36 @@
 # define RESPONSE_HPP
 
 # include "../../includes/webServer.hpp"
+# include "../request/Request.hpp"
 
 class Response
 {
 private:
-    std::string header;
-    std::string body;
-public:
-    Response(const char *filepath);
-    ~Response();
+	std::string	protocol;
+	std::string statusCode;
+	std::string statusText;
+	std::map<std::string, std::string> headers;
+	std::string body;
 
-    const char *response();
+	static std::map<std::string, void (Response::*)(const Request&)> allowMethods;
+	static std::map<int, std::string> possibleErrors;
+public:
+	Response(const char *filepath);
+	Response(const Request &request);
+	~Response();
+
+	std::map<std::string, void (Response::*)(const Request&)>	initAllowMethods(void);
+	void	HandlerGetMethod(const Request &request);
+	void	HandlerPostMethod(const Request &request);
+	void	HandlerHeadMethod(const Request &request);
+	void	HandlerPutMethod(const Request &request);
+	void	HandlerDeleteMethod(const Request &request);
+	void	HandlerOptionsMethod(const Request &request);
+	void	HandlerTraceMethod(const Request &request);
+
+	std::map<int, std::string> initPossibleErrors(void);
+
+	const char *response();
 };
 
 #endif

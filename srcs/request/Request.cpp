@@ -119,4 +119,25 @@ void	Request::printAll() {
 	std::cout << body << std::endl;
 }
 
+
+const std::string	&Request::getMethod(void) const {
+	return this->method;
+}
+
+const std::string		&Request::getUrl(void) const {
+	return this->url;
+}
+
+const std::string		&Request::getProtocol(void) const {
+	return this->protocol;
+}
+
+const std::string		&Request::getBody(void) const {
+	return this->body;
+}
+
+const std::map<std::string, std::string>	&Request::getHeaders(void) const {
+	return this->headers;
+}
+
 Request::~Request() {}

@@ -6,7 +6,7 @@
 /*   By: kgeorgia <kgeorgia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 19:08:41 by kgeorgia          #+#    #+#             */
-/*   Updated: 2021/12/04 16:18:16 by kgeorgia         ###   ########.fr       */
+/*   Updated: 2021/12/16 16:54:56 by kgeorgia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,22 @@ class Response
 {
 private:
 	std::string	protocol;
-	std::string statusCode;
-	std::string statusText;
-	std::map<std::string, std::string> headers;
-	std::string body;
+	std::string	statusCode;
+	std::string	statusText;
+	std::map<std::string, std::string>	headers;
+	std::string	body;
 
-	static std::map<std::string, void (Response::*)(const Request&)> allowMethods;
+	static mapMethods allowMethods;
 	static std::map<int, std::string> possibleErrors;
+
 public:
+	typedef std::map<std::string, void (Response::*)(const Request&)> mapMethods;
+
 	Response(const char *filepath);
 	Response(const Request &request);
 	~Response();
 
-	std::map<std::string, void (Response::*)(const Request&)>	initAllowMethods(void);
+	mapMethods	InitAllowMethods(void);
 	void	HandlerGetMethod(const Request &request);
 	void	HandlerPostMethod(const Request &request);
 	void	HandlerHeadMethod(const Request &request);
@@ -41,9 +44,11 @@ public:
 	void	HandlerOptionsMethod(const Request &request);
 	void	HandlerTraceMethod(const Request &request);
 
-	std::map<int, std::string> initPossibleErrors(void);
+	void	InitHeaders(void);
+	std::map<int, std::string> InitPossibleErrors(void);
 
-	const char *response();
+	void	SetHeaders(const Request &request);
+	const char *Response();
 };
 
 #endif

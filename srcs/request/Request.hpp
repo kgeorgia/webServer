@@ -34,11 +34,11 @@ public:
 	void			parseFirstLine(const std::string &line);
 	std::string		nextLine(const std::string &input, size_t &idx);
 
-	const std::string		&getMethod(void) const;
-	const std::string		&getUrl(void) const;
-	const std::string		&getProtocol(void) const;
-	const std::string		&getBody(void) const;
-	const std::map<std::string, std::string>	&getHeaders(void) const;
+	const std::string		&getMethod() const;
+	const std::string		&getUrl() const;
+	const std::string		&getProtocol() const;
+	const std::string		&getBody() const;
+	const std::map<std::string, std::string>	&getHeaders() const;
 
 	void			printAll();
 };

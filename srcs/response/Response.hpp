@@ -16,39 +16,42 @@
 # include "../../includes/webServer.hpp"
 # include "../request/Request.hpp"
 
+class Response;
+
+typedef int (Response::*methods)(const Request& request);
+typedef std::map<std::string, methods> mapMethods;
+typedef std::map<int, std::string> mapErrors;
+
 class Response
 {
-private:
-	std::string	protocol;
-	std::string	statusCode;
-	std::string	statusText;
-	std::map<std::string, std::string>	headers;
-	std::string	body;
+	public:
+		Response(const Request &request);
+		~Response();
 
-	static mapMethods allowMethods;
-	static std::map<int, std::string> possibleErrors;
+		static mapMethods	InitAllowMethods();
+		int		HandlerGetMethod(const Request &request);
+		int		HandlerPostMethod(const Request &request);
+		int		HandlerHeadMethod(const Request &request);
+		int		HandlerPutMethod(const Request &request);
+		int		HandlerDeleteMethod(const Request &request);
+		int		HandlerOptionsMethod(const Request &request);
+		int		HandlerTraceMethod(const Request &request);
 
-public:
-	typedef std::map<std::string, void (Response::*)(const Request&)> mapMethods;
+		void				InitHeaders();
+		static mapErrors	InitPossibleErrors();
 
-	Response(const char *filepath);
-	Response(const Request &request);
-	~Response();
+		void		SetHeaders(const Request &request);
+		const char	*ResponseCall();
 
-	mapMethods	InitAllowMethods(void);
-	void	HandlerGetMethod(const Request &request);
-	void	HandlerPostMethod(const Request &request);
-	void	HandlerHeadMethod(const Request &request);
-	void	HandlerPutMethod(const Request &request);
-	void	HandlerDeleteMethod(const Request &request);
-	void	HandlerOptionsMethod(const Request &request);
-	void	HandlerTraceMethod(const Request &request);
+	private:
+		std::string	protocol;
+		std::string	statusCode;
+		std::string	statusText;
+		std::map<std::string, std::string>	headers;
+		std::string	body;
 
-	void	InitHeaders(void);
-	std::map<int, std::string> InitPossibleErrors(void);
-
-	void	SetHeaders(const Request &request);
-	const char *Response();
+		static mapMethods allowMethods;
+		static mapErrors possibleErrors;
 };
 
 #endif

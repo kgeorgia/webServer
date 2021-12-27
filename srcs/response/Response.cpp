@@ -12,8 +12,8 @@
 
 #include "Response.hpp"
 
-Response::mapMethods   InitAllowMethods(void) {
-	Response::mapMethods res;
+mapMethods   Response::InitAllowMethods() {
+	mapMethods res;
 
 	res["GET"] = &Response::HandlerGetMethod;
 	res["POST"] = &Response::HandlerPostMethod;
@@ -26,7 +26,7 @@ Response::mapMethods   InitAllowMethods(void) {
 	return res;
 }
 
-std::map<int, std::string> InitPossibleErrors(void) {
+mapErrors Response::InitPossibleErrors() {
 	std::map<int, std::string> res;
 
 	res[100] = "Continue";
@@ -43,7 +43,10 @@ std::map<int, std::string> InitPossibleErrors(void) {
 	return res;
 }
 
-void    Response::InitHeaders(void) {
+mapErrors Response::possibleErrors = InitPossibleErrors();
+mapMethods Response::allowMethods = InitAllowMethods();
+
+void    Response::InitHeaders() {
 	headers["Allow"] = "";
 	headers["Content-Language"] = "";
 	headers["Content-Length"] = "";
@@ -53,37 +56,17 @@ void    Response::InitHeaders(void) {
 	headers["Last-Modified"] = "";
 	headers["Location"] = "";
 	headers["Retry-After"] = "";
-	headers["Server"] = "WebServer/1.0.0 kegeorgia";
+	headers["Server"] = "WebServer/1.0.0 kgeorgia";
 	headers["Transfer-Encoding"] = "identity";
-	headers["WWW-Authenticate"] = "";	
-
+	headers["WWW-Authenticate"] = "";
 }
 
-std::map<int, std::string> Response::possibleErrors = initPossibleErrors();
-Response::mapMethods Response::allowMethods = initAllowMethods();
-
-// Response::Response(const char *filepath)
-// {
-//     int size_file;
-//     std::string line;
-//     std::ifstream infile(filepath);
-
-//     while (getline(infile, line))
-//         body += line;
-	
-//     size_file = body.size();
-//     header = "HTTP/1.1 200 OK\nContent-Type: text/html\nContent-Length: ";
-//     header += std::to_string(size_file);
-//     header += "\n\n";
-// }
-
 Response::Response(const Request &request) {
-
 	InitHeaders();
-	this->protocol = request->protocol;
-	auto method = this->allowMethods.find(request.getMethod());
-	if (method != this->allowMethods.end()) {
-		auto ret = method->second(request);
+	this->protocol = request.getProtocol();
+	mapMethods::iterator method = allowMethods.find(request.getMethod());
+	if (method != allowMethods.end()) {
+		int ret  = (this->*Response::allowMethods[request.getMethod()])(request);
 		statusCode = std::to_string(ret);
 		statusText = possibleErrors[ret];
 	}
@@ -94,7 +77,11 @@ Response::Response(const Request &request) {
 	SetHeaders(request);
 }
 
-const char    *Response::response()
+void 	Response::SetHeaders(const Request &request) {
+
+}
+
+const char    *Response::ResponseCall()
 {
 	std::string tmp;
 
